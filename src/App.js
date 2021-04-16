@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import Loading from './Loading';
+import Tours from './Tours';
 
 const url = 'https://course-api.com/react-tours-project'
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [tours, setTours] = useState([]);
+
+  const fetchTours = async () =>{
+    setLoading(true)
+    const response = await fetch(url);
+    const tours = await response.json(); 
+    console.log(tours)
+  };
+
+  useEffect (() => {
+    fetchTours();
+  }, []);
 
   if (loading) {
     return (
@@ -14,7 +26,11 @@ function App() {
       </main>
     )
   }
-  return <h2>Tours Project</h2>
+  return (
+  <main>
+    <Tours/>
+  </main>
+  )
 }
 
 export default App
